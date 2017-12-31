@@ -37,6 +37,35 @@ func RunMainWindow() {
 		Title:    config.Title,
 		MinSize:  Size{Width: Width, Height: Height},
 		Layout:   VBox{},
+
+		MenuItems: []MenuItem{
+			Menu{
+				Text: "&File",
+				Items: []MenuItem{
+					Separator{},
+					Action{
+						Text:        "退出",
+						OnTriggered: func() { mw.Close() },
+					},
+				},
+			},
+			Menu{
+				Text: "&Help",
+				Items: []MenuItem{
+					Action{
+						Text:        "帮助",
+						OnTriggered: mw.helpActionTriggered,
+					},
+					Separator{},
+					Action{
+						Text:        "关于",
+						OnTriggered: mw.aboutActionTriggered,
+					},
+				},
+			},
+		},
+
+
 		Children: []Widget{
 			Label{
 				AssignTo: &mw.titleLabel,
@@ -98,4 +127,12 @@ func (mw *MyMainWindow) getRangeButtonTriggered() {
 	ips := ip.GetSingleIPsByRegexp(input)
 	result := ip.GetRange(ips)
 	mw.outputArea.SetText(strings.Join(result, "\r\n"))
+}
+
+func (mw *MyMainWindow) helpActionTriggered() {
+	walk.MsgBox(mw, "帮助", config.Help, walk.MsgBoxIconInformation)
+}
+
+func (mw *MyMainWindow) aboutActionTriggered() {
+	walk.MsgBox(mw, "关于", config.About, walk.MsgBoxIconInformation)
 }
