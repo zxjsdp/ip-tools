@@ -23,5 +23,5 @@ IP 转换工具
 ## Build
 
     go get -u -v github.com/zxjsdp/ip-tools
-    cd $GOPATH/github.com/zxjsdp/ip-tools
+    cd $GOPATH/github.com/zxjsdp/ip-tools/gui/windows
     go build -ldflags="-H windowsgui" -o ip-tools.exe
