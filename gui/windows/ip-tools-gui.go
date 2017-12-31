@@ -8,6 +8,7 @@ import (
 	. "github.com/lxn/walk/declarative"
 	"github.com/zxjsdp/ip-tools/config"
 	"github.com/zxjsdp/ip-tools/ip"
+	"golang.org/x/crypto/openpgp/errors"
 )
 
 const (
@@ -115,18 +116,28 @@ func RunMainWindow() {
 }
 
 func (mw *MyMainWindow) prettifyIPsButtonTriggered() {
-	input := mw.inputArea.Text()
-	input = ip.PrepareInputString(input)
-	ips := ip.GetSingleIPsByRegexp(input)
-	mw.outputArea.SetText(strings.Join(ips, "\r\n"))
+	input, err := mw.getAndCheckInputContent()
+	if err == nil {
+		input = ip.PrepareInputString(input)
+		ips := ip.GetSingleIPsByRegexp(input)
+		ipErr := mw.checkIps(ips)
+		if ipErr == nil {
+			mw.outputArea.SetText(strings.Join(ips, "\r\n"))
+		}
+	}
 }
 
 func (mw *MyMainWindow) getRangeButtonTriggered() {
-	input := mw.inputArea.Text()
-	input = ip.PrepareInputString(input)
-	ips := ip.GetSingleIPsByRegexp(input)
-	result := ip.GetRange(ips)
-	mw.outputArea.SetText(strings.Join(result, "\r\n"))
+	input, err := mw.getAndCheckInputContent()
+	if err == nil {
+		input = ip.PrepareInputString(input)
+		ips := ip.GetSingleIPsByRegexp(input)
+		ipErr := mw.checkIps(ips)
+		if ipErr == nil {
+			result := ip.GetRange(ips)
+			mw.outputArea.SetText(strings.Join(result, "\r\n"))
+		}
+	}
 }
 
 func (mw *MyMainWindow) helpActionTriggered() {
@@ -135,4 +146,25 @@ func (mw *MyMainWindow) helpActionTriggered() {
 
 func (mw *MyMainWindow) aboutActionTriggered() {
 	walk.MsgBox(mw, "关于", config.About, walk.MsgBoxIconInformation)
+}
+
+func (mw *MyMainWindow) errorActionTriggered(message string) {
+	walk.MsgBox(mw, "错误", message, walk.MsgBoxIconError)
+}
+
+func (mw *MyMainWindow) getAndCheckInputContent() (string, error) {
+	input := mw.inputArea.Text()
+	if len(input) == 0 || len(strings.TrimSpace(input)) == 0 {
+		mw.errorActionTriggered(config.BlankContentErrorMsg)
+		return "", errors.InvalidArgumentError(config.BlankContentErrorMsg)
+	}
+	return strings.TrimSpace(input), nil
+}
+
+func (mw *MyMainWindow) checkIps(ips []string) error {
+	if len(ips) == 0 {
+		mw.errorActionTriggered(config.InvalidContentErrorMsg)
+		return errors.InvalidArgumentError(config.InvalidContentErrorMsg)
+	}
+	return nil
 }

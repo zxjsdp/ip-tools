@@ -3,7 +3,7 @@ package config
 const (
 	GUITitle   = "IP Tools"
 	GUIVersion = "v0.0.1"
-	Title  = GUITitle + " " + GUIVersion
+	Title      = GUITitle + " " + GUIVersion
 
 	About = `IP 转换工具
 
@@ -26,4 +26,9 @@ Version: ` + GUIVersion
 58.28.63.0-255
 58.28.64.0-255
 66.199.151.0-255`
+)
+
+const (
+	BlankContentErrorMsg   = "输入内容为空！"
+	InvalidContentErrorMsg = "输入内容中未找到 IP 信息！"
 )
