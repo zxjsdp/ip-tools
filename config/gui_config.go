@@ -2,7 +2,7 @@ package config
 
 const (
 	GUITitle   = "IP Tools"
-	GUIVersion = "v0.0.1"
+	GUIVersion = "v0.1.0"
 	Title      = GUITitle + " " + GUIVersion
 
 	About = `IP 转换工具
