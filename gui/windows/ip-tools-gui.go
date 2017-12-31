@@ -11,7 +11,6 @@ import (
 )
 
 const (
-	Title  = config.GUITitle + " " + config.GUIVersion
 	Width  = 850
 	Height = 700
 )
@@ -19,6 +18,7 @@ const (
 type MyMainWindow struct {
 	*walk.MainWindow
 
+	titleLabel        *walk.Label
 	prettifyIPsButton *walk.PushButton
 	getRangeButton    *walk.PushButton
 	inputArea         *walk.TextEdit
@@ -34,10 +34,15 @@ func RunMainWindow() {
 
 	if err := (MainWindow{
 		AssignTo: &mw.MainWindow,
-		Title:    Title,
+		Title:    config.Title,
 		MinSize:  Size{Width: Width, Height: Height},
 		Layout:   VBox{},
 		Children: []Widget{
+			Label{
+				AssignTo: &mw.titleLabel,
+				Text:     config.Title,
+				Font:     Font{Family: "Microsoft Yahei", PointSize: 15},
+			},
 			Composite{
 				Layout: HBox{},
 				Children: []Widget{
