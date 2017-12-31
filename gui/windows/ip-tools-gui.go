@@ -12,7 +12,7 @@ import (
 )
 
 const (
-	Width  = 850
+	Width  = 950
 	Height = 700
 )
 
@@ -99,11 +99,15 @@ func RunMainWindow() {
 						AssignTo: &mw.inputArea,
 						Text:     "",
 						Font:     Font{Family: "Consolas", PointSize: 10},
+						HScroll:  true,
+						VScroll:  true,
 					},
 					TextEdit{
 						AssignTo: &mw.outputArea,
 						Text:     "",
 						Font:     Font{Family: "Consolas", PointSize: 10},
+						HScroll:  true,
+						VScroll:  true,
 					},
 				},
 			},
