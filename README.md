@@ -3,7 +3,7 @@ Collection of IP related tools.
 
 ## Description
 
-IP 转换工具
+IP 转换工具（当前版本：[v0.0.1](https://github.com/zxjsdp/ip-tools/releases)）
 
 1. 从任意文本中提取 IP。
 2. 根据 IP 获取 IP 地址范围，可用于 gscan_quic 等工具进行扫描。
